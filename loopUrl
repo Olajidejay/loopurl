@@ -1,0 +1,20 @@
+const url = require('url');
+const https = require('https');
+
+const urlString = 'https://ms-sc-exchange.socialconnector.io/test-leaderboard-gary/$ELEVATE';
+const parsedUrl = url.parse(urlString);
+
+const parts = parsedUrl.pathname.split('/');
+const lastPart = parts[parts.length - 1];
+
+const data = ['$DRIVE', '$DRPOWER', '$DEAF', '$UPGRADE', '$PROG', '$QST', '$BOSS', '$HOFE', '$KREA', '$PIPER', '$RSIST', '$LEGEND', '$LOOP', '$MOJO', '$DUNK', '$SEED', '$CYBER', '$CNECTR', '$MAES', '$EASE', '$ACCESS', '$FREEDOM', '$SOA', '$JRNY', '$BAGS', '$DGN', '$DABL', '$BDAWG', '$FUZZY', '$LVRG', '$BWC', '$NTWRK', '$ANTI', '$PARENT', '$LION', '$GSWL', '$WELLNESS', '$FLOW', '$NSIGHT'];
+
+for (let i = 0; i < data.length; i++) {
+  const newUrlString = urlString.replace(lastPart, data[i]);
+  https.get(newUrlString, (res) => {
+    console.log(`Got response for ${newUrlString}: ${res.statusCode}`);
+    // Response
+  }).on('error', (e) => {
+    console.error(`Error while making request to ${newUrlString}: ${e.message}`);
+  });
+}
